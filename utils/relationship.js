@@ -1,3 +1,7 @@
+/**
+* BY: haole zheng
+* http://passer-by.com
+*/
 !function (root, factory) {
 	if (typeof module === 'object' && module.exports){
 		module.exports = factory();
