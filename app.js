@@ -20,8 +20,8 @@ App({
           wx.getUserInfo({
             success: res => {
               // 可以将 res 发送给后台解码出 unionId
-              this.globalData.userInfo = res.userInfo
-
+              this.globalData.userInfo = res.userInfo;
+              //console.log(res.userInfo);
               // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
               // 所以此处加入 callback 以防止这种情况
               if (this.userInfoReadyCallback) {
@@ -35,5 +35,23 @@ App({
   },
   globalData: {
     userInfo: null
+  },
+  getUserInfo: function (cb) {
+    var that = this
+    if (this.globalData.userInfo) {
+      typeof cb == "function" && cb(this.globalData.userInfo)
+    } else {
+      //调用登录接口
+      wx.login({
+        success: function () {
+          wx.getUserInfo({
+            success: function (res) {
+              that.globalData.userInfo = res.userInfo
+              typeof cb == "function" && cb(that.globalData.userInfo)
+            }
+          })
+        }
+      })
+    }
   }
 })

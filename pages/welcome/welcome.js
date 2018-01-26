@@ -36,23 +36,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this;
-    // 获取系统信息
-    wx.getSystemInfo({
-      success: function (res) {
-        console.log(res);
-        // 可使用窗口宽度、高度
-        console.log('height=' + res.windowHeight);
-        console.log('width=' + res.windowWidth);
-        // 计算主体部分高度,单位为px
-        that.setData({
-          // second部分高度 = 利用窗口可使用高度 - first部分高度（这里的高度单位为px，所有利用比例将300rpx转换为px）
-          second_height: res.windowHeight - res.windowWidth / 750 * 300
-        })
-      }
-    })
+    
   },
-
+ 
 
   /**
    * 用户点击右上角分享
@@ -160,18 +146,10 @@ Page({
         //如果字数大于22个则不要增加and提示关系态复杂啦
         if(data.length>=22){
             //console.log("字数超出限制");
-            dataResult = "关系有点远，年长就叫老祖宗吧~";
+            dataResult = "关系有点远，年长就叫老祖宗~\n同龄人就叫帅哥美女吧";
         }else{
-          //同性关系处理
-          if ((this.data.sex == 1 && id == this.data.id1) || (this.data.sex == 0 && id == this.data.id2) ){
-            data = data + "的" + id;
-            result = relationship({ text: data, sex: this.data.sex, reverse: false, type: 'default' });
-            if (this.isNull(result)) { //结果为空
-             // result = "暂不支持同性关系哦";
-              dataResult = "暂不支持同性关系哦";
-            }
-            
-            
+          //同性关系处理 当为男性时，一开始点击夫不做处理
+          if ((this.data.sex == 1 && id == this.data.id1 && data == '我') || (this.data.sex == 0 && id == this.data.id2 && data=='我') ){
             
           }else{
             data = data + "的" + id;
